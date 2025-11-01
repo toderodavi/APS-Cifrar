@@ -1,4 +1,5 @@
 alfabeto = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!'(),-.:;?[]{}ÀÁÂÃàáâãÉÊéêÕÔõôÍíÚúÇç" + '"'
+chave = '.kàdNF1â)ãKX2jbÉ:D53ch-YiÃIaE4fÊGJCMe;gL0á6Z,H'
 
 def chave_vigenere(chave, tamanho):
     texto_chave = (chave * (tamanho // len(chave) + 1 )) [:tamanho]
