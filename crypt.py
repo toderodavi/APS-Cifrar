@@ -1,5 +1,5 @@
 alfabeto = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!'(),-.:;?[]{}ÀÁÂÃàáâãÉÊéêÕÔõôÍíÚúÇç" + '"'
-alfabeto = alfabeto
+
 def mensagem_vigenere(mensagem): 
     mensagem = mensagem
     return mensagem
