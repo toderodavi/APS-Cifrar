@@ -37,8 +37,7 @@ while questao=="s":
                 texto = ""
                 for linha in conteudo:
                     texto += linha
-                chave = '.kàdNF1â)ãKX2jbÉ:D53ch-YiÃIaE4fÊGJCMe;gL0á6Z,H'
-                textoCifrado = crypt.cifrar_vigenere(texto, chave)
+                textoCifrado = crypt.cifrar_vigenere(texto)
                 utils.inserirConteudoArquivo(fileName, textoCifrado)
                 print("Arquivo criptografado com sucesso!")
                 criptografar=input("Deseja criptografar outro arquivo? (s/n) ")
@@ -69,8 +68,7 @@ while questao=="s":
                         textoCifrado = ""
                         for linha in conteudo:
                             textoCifrado += linha
-                        chave = '.kàdNF1â)ãKX2jbÉ:D53ch-YiÃIaE4fÊGJCMe;gL0á6Z,H'
-                        textoDecifrado = crypt.decifrar_vigenere(textoCifrado, chave)
+                        textoDecifrado = crypt.decifrar_vigenere(textoCifrado)
                         fileName = fileName + "descriptografada"
                         utils.criarArquivo(fileName)
                         utils.inserirConteudoArquivo(fileName, textoDecifrado)
