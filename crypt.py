@@ -56,5 +56,3 @@ def hash(file):
     # Caso ele não tenha 16 caracteres, preenche com 0s a esquerda
     hashHexSequence = f'{hashIntSequence:016x}'
     return hashHexSequence
-
-print(hash("text.txt"))
