@@ -1,12 +1,13 @@
 alfabeto = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!'(),-.:;?[]{}ÀÁÂÃàáâãÉÊéêÕÔõôÍíÚúÇç" + '"'
 chave = '.kàdNF1â)ãKX2jbÉ:D53ch-YiÃIaE4fÊGJCMe;gL0á6Z,H'
 
-def chave_vigenere(chave, tamanho):
+
+def chave_vigenere(tamanho):
     texto_chave = (chave * (tamanho // len(chave) + 1 )) [:tamanho]
     return texto_chave
 
-def cifrar_vigenere(texto, chave):
-    chave = chave_vigenere(chave, len(texto))
+def cifrar_vigenere(texto):
+    chave = chave_vigenere(len(texto))
     resultado = ''
 
     for i in range(len(texto)):
@@ -20,8 +21,8 @@ def cifrar_vigenere(texto, chave):
             resultado += j
     return resultado
 
-def decifrar_vigenere(textoCifrado, chave):
-    chave = chave_vigenere(chave, len(textoCifrado))
+def decifrar_vigenere(textoCifrado):
+    chave = chave_vigenere(len(textoCifrado))
     resultado = ''
 
     for i in range(len(textoCifrado)):
