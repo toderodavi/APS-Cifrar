@@ -11,6 +11,7 @@ def chave_vigenere(tamanho):
     return textoChave
 
 def cifrar_vigenere(texto):
+    
     chave = chave_vigenere(len(texto))
     resultado = ''
 
@@ -44,14 +45,14 @@ def decifrar_vigenere(textoCifrado):
             resultado += j
     return resultado
 
-def hash(file):
+def hash(fileContent):
     hashIntSequence = 0
     mult = 1019
     mod = 10**18 + 7
-    fileContent = utils.lerConteudoArquivo(file)
-    for linha in fileContent:
-        for char in linha:
-         hashIntSequence = ((hashIntSequence ^ ord(char)) * mult) % mod
+    for linha in range(len(fileContent)):
+        for celula in fileContent[linha]:
+                for char in celula:
+                    hashIntSequence = ((hashIntSequence ^ ord(char)) * mult) % mod
     # Formata a sequência de inteiros para uma hex de até 16 caracteres
     # Caso ele não tenha 16 caracteres, preenche com 0s a esquerda
     hashHexSequence = f'{hashIntSequence:016x}'

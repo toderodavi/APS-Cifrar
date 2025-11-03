@@ -1,7 +1,33 @@
 import utils, crypt
-texto = input("Texto: ")
-chave = input("Chave: ")
+file = 'text.txt'
+linhasCriptografadas = []
+linhasDescriptografadas = []
+celulaCriptografada = []
+celulaDescriptografada = []
+linhasParaDescriptografar = []
+primeiroHash = ''
+segundoHash = ''
+linhasArquivo = utils.lerConteudoArquivo(file)
 
-textoCifrado = crypt.cifrar_vigenere(texto, chave)
-print(textoCifrado)
-print(crypt.decifrar_vigenere(textoCifrado, chave))
+for linha in range(len(linhasArquivo)):
+    for celula in linhasArquivo[linha]:
+        celulaCriptografada.append(crypt.cifrar_vigenere(celula))
+    linhasCriptografadas.append(celulaCriptografada)
+    celulaCriptografada = []
+linhasCriptografadas.append(crypt.hash(linhasArquivo))
+print(linhasCriptografadas)
+
+primeiroHash = linhasCriptografadas[-1]
+linhasParaDescriptografar = linhasCriptografadas[:-1]
+
+for linha in range(len(linhasParaDescriptografar)):
+    for celula in linhasParaDescriptografar[linha]:
+            celulaDescriptografada.append(crypt.decifrar_vigenere(celula))
+    linhasDescriptografadas.append(celulaDescriptografada)
+    celulaDescriptografada = []
+print(linhasDescriptografadas)
+segundoHash = crypt.hash(linhasDescriptografadas) 
+if primeiroHash == segundoHash:
+     print("Conteúdo original mantido!")
+else:
+     print("Conteúdo original comprometido!!!!")

@@ -7,7 +7,10 @@ def inserirConteudoArquivo(fileName, content):
     arquivo.close()
 
 def lerConteudoArquivo(file):
+    linhas = []
     file = open(file, "r", encoding="utf-8")
     conteudoArquivo = file.readlines()
     file.close()
-    return conteudoArquivo
+    for i in conteudoArquivo:
+        linhas.append(i.replace('\n', '').split(','))
+    return linhas
