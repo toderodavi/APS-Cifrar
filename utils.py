@@ -1,10 +1,22 @@
-def criarArquivo(fileName):
-    open(fileName, "w", encoding="utf-8")
+def criarArquivo(fileName, content):
+    file = open(f'{fileName}.csv', "w", encoding="utf-8")
+    inserirConteudoArquivo(file, content)
 
-def inserirConteudoArquivo(fileName, content):
-    arquivo = open(fileName, "w", encoding="utf-8")
-    arquivo.write(content)
-    arquivo.close()
+def inserirConteudoArquivo(file, content):
+    linhasFormatadas = []
+    hashString = content[-1]
+    linhas = content[:-1]
+    if isinstance(hashString, str):
+        for linha in linhas:
+            linhasFormatadas.append(','.join(linha))
+        linhasFormatadas.append(hashString)
+    else:
+        linhas = content
+        for linha in linhas:
+            linhasFormatadas.append(','.join(linha))
+    content = '\n'.join(linhasFormatadas)
+    file.write(content)
+    file.close()
 
 def lerConteudoArquivo(file):
     linhas = []
@@ -14,3 +26,4 @@ def lerConteudoArquivo(file):
     for i in conteudoArquivo:
         linhas.append(i.replace('\n', '').split(','))
     return linhas
+print(lerConteudoArquivo("Urnas(4-1).csv"))
