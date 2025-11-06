@@ -38,3 +38,15 @@ def lerConteudoArquivo(nomeArquivo):
     for linha in linhas:
         conteudoArquivo.append(linha.replace('\n', '').split(','))
     return conteudoArquivo
+
+def formatarNomeArquivo(nomeArquivo):
+    # Retirar sufixos do arquivo (.txt / .csv / Cifrado / Decifrado)
+    # O arquivo será .txt ou .csv e pode ter Cifrado ou Decifrado
+    if nomeArquivo.endswith(('.csv', '.txt')):
+        nomeArquivo = nomeArquivo[:-4]
+    if nomeArquivo.endswith('Cifrado'):
+        nomeArquivo = nomeArquivo.replace('Cifrado', '')
+    if nomeArquivo.endswith('Decifrado'):
+        nomeArquivo = nomeArquivo.replace('Decifrado', '')
+    return nomeArquivo
+

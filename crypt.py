@@ -73,7 +73,7 @@ def CifrarCSV(nomeArquivo):
     conteudoCifrado.append(hash(ConteudoCSV))
 
     # Cria o novo .csv com o conteúdo criptografado
-    utils.gerarArquivo(f'{nomeArquivo}Cifrado', conteudoCifrado)
+    utils.gerarArquivo(f'{utils.formatarNomeArquivo(nomeArquivo)}Cifrado', conteudoCifrado)
 
 def DecifrarCSV(nomeArquivo):
     ConteudoCifradoCsv = utils.lerConteudoArquivo(nomeArquivo)
@@ -91,7 +91,7 @@ def DecifrarCSV(nomeArquivo):
     hashNovo = hash(conteudoDecifrado)
     if hashOriginal == hashNovo:
         print("Integridade do conteúdo confirmada via hash.")
-        utils.gerarArquivo(f"{nomeArquivo}Decifrado", conteudoDecifrado)
+        utils.gerarArquivo(f"{utils.formatarNomeArquivo(nomeArquivo)}Decifrado", conteudoDecifrado)
     else:
         print("O conteúdo foi alterado, código hash não coincide")
         print("Arquivo será deletado.")
