@@ -29,16 +29,20 @@ def excluirArquivo(nomeArquivo):
     arquivo.close()
 
 def lerConteudoArquivo(nomeArquivo):
-    conteudoArquivo = []
-    arquivo = open(nomeArquivo, "r", encoding="utf-8")
-    linhas = arquivo.readlines()
-    arquivo.close()
-    # Itero linha por linha do arquivo, retirando \n do final de uma
-    # E faço cada linha virar uma lista com strings usando como separador o ','
-    for linha in linhas:
-        conteudoArquivo.append(linha.replace('\n', '').split(','))
-    return conteudoArquivo
-
+    try:
+        conteudoArquivo = []
+        arquivo = open(nomeArquivo, "r", encoding="utf-8")
+        linhas = arquivo.readlines()
+        arquivo.close()
+        # Itero linha por linha do arquivo, retirando \n do final de uma
+        # E faço cada linha virar uma lista com strings usando como separador o ','
+        for linha in linhas:
+            conteudoArquivo.append(linha.replace('\n', '').split(','))
+        return conteudoArquivo
+    except FileNotFoundError:
+        print(f"Arquivo '{nomeArquivo}' não encontrado.")
+        return []
+    
 def formatarNomeArquivo(nomeArquivo):
     # Retirar sufixos do arquivo (.txt / .csv / Cifrado / Decifrado)
     # O arquivo será .txt ou .csv e pode ter Cifrado ou Decifrado
@@ -57,9 +61,9 @@ def depurarVotos():
     somaVotos = []
     # Recebe os nomes dos arquivos antes de acessar cada um
     while True:
-        nomesArquivos.append(input("Insira o nome/caminho do arquivo:  "))
+        nomesArquivos.append(input("Insira o nome do arquivo:\n"))
         if len(nomesArquivos) >= 2:
-            escolha = input("Deseja adicionar mais um arquivo?  s/n  ")
+            escolha = input("Deseja adicionar mais um arquivo?  s/n\n")
             if escolha == 's':
                 continue
             else:
@@ -68,7 +72,9 @@ def depurarVotos():
     # e somando os votos
     for i in range(len(nomesArquivos)):
         arquivo = lerConteudoArquivo(nomesArquivos[i])
-        if i == 0:
+        if not arquivo:
+            continue
+        if not csvConstante:
             for colunas in range(len(arquivo)):
                 if colunas == 0:
                     csvConstante.append(arquivo[colunas][:-1])     
@@ -80,9 +86,12 @@ def depurarVotos():
                     if colunas != 0:
                         somaVotos[colunas-1] += (int(arquivo[colunas][-1]))
     # Transforma os votos em strings e as insere novamente ao CSV
-    for linha in range(len(somaVotos)):
-        somaVotos[linha] = str(somaVotos[linha])
-    somaVotos.insert(0, 'Total de Votos')
-    for linha in range(len(csvConstante)):
-        csvConstante[linha].append(somaVotos[linha])
-    gerarArquivo('DepuraçãoVotos', csvConstante)
+    if not somaVotos:
+        print("Não foi possível realizar a depuração.")
+    else:
+        for linha in range(len(somaVotos)):
+            somaVotos[linha] = str(somaVotos[linha])
+        somaVotos.insert(0, 'Total de Votos')
+        for linha in range(len(csvConstante)):
+            csvConstante[linha].append(somaVotos[linha])
+        gerarArquivo('DepuraçãoVotos', csvConstante)

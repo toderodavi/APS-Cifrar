@@ -10,7 +10,6 @@ while True:
             while True:
                 nomeArquivo = input("Insira o nome do arquivo que deseja criptografar: ")
                 crypt.CifrarCSV(nomeArquivo)
-                print("Arquivo criptografado com sucesso!")
                 oqfazer=input("Deseja criptografar outro arquivo? (s/n) ")
                 if oqfazer != 's':
                     break
