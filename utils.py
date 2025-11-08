@@ -52,19 +52,20 @@ def formatarNomeArquivo(nomeArquivo):
 
 def depurarVotos():
     # Criar variável para guardar os nomes
-    i = 0
     nomesArquivos = []
     csvConstante = []
     somaVotos = []
+    # Recebe os nomes dos arquivos antes de acessar cada um
     while True:
         nomesArquivos.append(input("Insira o nome/caminho do arquivo:  "))
-        i += 1
-        if i > 1:
+        if len(nomesArquivos) >= 2:
             escolha = input("Deseja adicionar mais um arquivo?  s/n  ")
             if escolha == 's':
                 continue
             else:
                 break
+    # Acessa arquivo por arquivo, guardando os dados constantes
+    # e somando os votos
     for i in range(len(nomesArquivos)):
         arquivo = lerConteudoArquivo(nomesArquivos[i])
         if i == 0:
@@ -78,10 +79,10 @@ def depurarVotos():
             for colunas in range(len(arquivo)):
                     if colunas != 0:
                         somaVotos[colunas-1] += (int(arquivo[colunas][-1]))
+    # Transforma os votos em strings e as insere novamente ao CSV
     for linha in range(len(somaVotos)):
         somaVotos[linha] = str(somaVotos[linha])
     somaVotos.insert(0, 'Total de Votos')
     for linha in range(len(csvConstante)):
         csvConstante[linha].append(somaVotos[linha])
     gerarArquivo('DepuraçãoVotos', csvConstante)
-depurarVotos()
