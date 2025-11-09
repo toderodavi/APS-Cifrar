@@ -24,28 +24,44 @@ def gerarArquivo(nomeArquivo, conteudo):
     arquivo.write(linhasFormatadas)
     arquivo.close()
 
-def excluirArquivo(nomeArquivo):
+def apagarConteudoArquivo(nomeArquivo):
     arquivo = open(nomeArquivo, 'w', encoding="utf-8")
     arquivo.close()
 
 def lerConteudoArquivo(nomeArquivo):
+    conteudoArquivo = []
+    linhas = []
+    # Toda seção de try.. except está testando se o arquivo
+    # está codificado em utf-8 ou cp1252. O padrão atual é utf-8,
+    # mas os arquivos enviados pelo Olavo aparentam estar em cp1252.
+    # Basicamente, se o nome do arquivo inserido não for encontrado
+    # ou não ser decodificado por utf-8 ou cp1252, será retornada uma lista vazia
+    # para que o programa não pare de funcionar (apenas mostre o erro no terminal).
     try:
-        conteudoArquivo = []
         arquivo = open(nomeArquivo, "r", encoding="utf-8")
         linhas = arquivo.readlines()
         arquivo.close()
-        # Itero linha por linha do arquivo, retirando \n do final de uma
-        # E faço cada linha virar uma lista com strings usando como separador o ','
-        for linha in linhas:
-            conteudoArquivo.append(linha.replace('\n', '').split(','))
-        return conteudoArquivo
+    except UnicodeDecodeError:
+        try:
+            arquivo = open(nomeArquivo, "r", encoding="cp1252")
+            linhas = arquivo.readlines()
+            arquivo.close()
+        except Exception:
+            print(f"Não foi possível ler o arquivo '{nomeArquivo}' como UTF-8 ou cp1252.")
+            return []
+        
     except FileNotFoundError:
         print(f"Arquivo '{nomeArquivo}' não encontrado.")
         return []
     
+    # Itero linha por linha do arquivo, retirando \n do final de uma
+    # E faço cada linha virar uma lista com strings usando como separador o ','
+    for linha in linhas:
+        conteudoArquivo.append(linha.replace('\n', '').split(','))
+    return conteudoArquivo
+
 def formatarNomeArquivo(nomeArquivo):
-    # Retirar sufixos do arquivo (.txt / .csv / Cifrado / Decifrado)
-    # O arquivo será .txt ou .csv e pode ter Cifrado ou Decifrado
+    # Retira sufixos do arquivo (.txt / .csv / Cifrado / Decifrado)
     if nomeArquivo.endswith(('.csv', '.txt')):
         nomeArquivo = nomeArquivo[:-4]
     if nomeArquivo.endswith('Cifrado'):
@@ -76,22 +92,21 @@ def depurarVotos():
             continue
         if not csvConstante:
             for colunas in range(len(arquivo)):
-                if colunas == 0:
-                    csvConstante.append(arquivo[colunas][:-1])     
-                else:
-                    csvConstante.append(arquivo[colunas][:-1])
+                csvConstante.append(arquivo[colunas][:-1])     
+                if colunas != 0:
                     somaVotos.append(int(arquivo[colunas][-1]))     
         else:
             for colunas in range(len(arquivo)):
                     if colunas != 0:
                         somaVotos[colunas-1] += (int(arquivo[colunas][-1]))
-    # Transforma os votos em strings e as insere novamente ao CSV
     if not somaVotos:
         print("Não foi possível realizar a depuração.")
     else:
+        # Transforma os votos em strings e as insere novamente ao CSV
         for linha in range(len(somaVotos)):
             somaVotos[linha] = str(somaVotos[linha])
         somaVotos.insert(0, 'Total de Votos')
         for linha in range(len(csvConstante)):
             csvConstante[linha].append(somaVotos[linha])
         gerarArquivo('DepuraçãoVotos', csvConstante)
+        print("Depuração realizada.")
