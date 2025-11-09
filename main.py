@@ -19,7 +19,7 @@ while True:
             while True:
                 nomeArquivo = input("Insira o nome do arquivo que deseja descriptografar: ")
                 crypt.DecifrarCSV(nomeArquivo)
-                oqfazer=input("Deseja criptografar outro arquivo? (s/n) ")
+                oqfazer=input("Deseja descriptografar outro arquivo? (s/n) ")
                 if oqfazer != 's':
                     break
 
@@ -27,6 +27,7 @@ while True:
         elif oqfazer == "3":
             utils.depurarVotos()
 
+        # Sair do programa
         elif oqfazer == "4":
             break
 

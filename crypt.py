@@ -15,7 +15,7 @@ def cifrarVigenere(texto):
     resultado = ''
 
     # Para cada iteração, j é meu caracter a ser cifrado e k é o caracter da chave.
-    # Se j e k tiverem presentes no alfabeto,
+    # Se j e k estiverem presentes no alfabeto,
     # duas variáveis recebem a posição (index) desses caracteres no alfabeto.
     # Assim, o caracter criptografado será a soma dessas posições dentro do alfabeto.
     for i in range(len(texto)):
@@ -80,23 +80,26 @@ def CifrarCSV(nomeArquivo):
 def DecifrarCSV(nomeArquivo):
     ConteudoCifradoCsv = utils.lerConteudoArquivo(nomeArquivo)
     if ConteudoCifradoCsv != []:
-        celulaDecifrada = []
-        conteudoDecifrado = []
-
-        # Decifrar o .csv
-        hashOriginal = ''.join(ConteudoCifradoCsv[-1])
-        ConteudoCifradoCsv = ConteudoCifradoCsv[:-1]
-        for linha in range(len(ConteudoCifradoCsv)):
-            for celula in ConteudoCifradoCsv[linha]:
-                    celulaDecifrada.append(decifrarVigenere(celula))
-            conteudoDecifrado.append(celulaDecifrada)
-            celulaDecifrada = []
-        hashNovo = hash(conteudoDecifrado)
-        if hashOriginal == hashNovo:
-            print("Integridade do conteúdo confirmada via hash.")
-            print("Arquivo descriptografado com sucesso!")
-            utils.gerarArquivo(f"{utils.formatarNomeArquivo(nomeArquivo)}Decifrado", conteudoDecifrado)
+        if not (len(ConteudoCifradoCsv[-1]) == 1) or not (len(ConteudoCifradoCsv[-1][0]) == 16):
+            print("Hash não encontrado. Confira se o arquivo inserido está criptografado.")
         else:
-            print("O conteúdo foi alterado, código hash não coincide")
-            print("Arquivo será deletado.")
-            utils.excluirArquivo(nomeArquivo)
+            celulaDecifrada = []
+            conteudoDecifrado = []
+            
+            # Decifrar o .csv
+            hashOriginal = ''.join(ConteudoCifradoCsv[-1])
+            ConteudoCifradoCsv = ConteudoCifradoCsv[:-1]
+            for linha in range(len(ConteudoCifradoCsv)):
+                for celula in ConteudoCifradoCsv[linha]:
+                        celulaDecifrada.append(decifrarVigenere(celula))
+                conteudoDecifrado.append(celulaDecifrada)
+                celulaDecifrada = []
+            hashNovo = hash(conteudoDecifrado)
+            if hashOriginal == hashNovo:
+                print("Integridade do conteúdo confirmada via hash.")
+                print("Arquivo descriptografado com sucesso!")
+                utils.gerarArquivo(f"{utils.formatarNomeArquivo(nomeArquivo)}Decifrado", conteudoDecifrado)
+            else:
+                print("O conteúdo foi alterado, código hash não coincide")
+                print("Conteúdo do arquivo será deletado.")
+                utils.apagarConteudoArquivo(nomeArquivo)
