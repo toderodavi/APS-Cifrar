@@ -33,7 +33,7 @@ def lerConteudoArquivo(nomeArquivo):
     linhas = []
     # Toda seção de try.. except está testando se o arquivo
     # está codificado em utf-8 ou cp1252. O padrão atual é utf-8,
-    # mas os arquivos enviados pelo Olavo aparentam estar em cp1252.
+    # mas os arquivos enviados pelo Olavo aparentam estar em cp1252;
     # Basicamente, se o nome do arquivo inserido não for encontrado
     # ou não ser decodificado por utf-8 ou cp1252, será retornada uma lista vazia
     # para que o programa não pare de funcionar (apenas mostre o erro no terminal).
@@ -75,7 +75,7 @@ def depurarVotos():
     nomesArquivos = []
     csvConstante = []
     somaVotos = []
-    # Recebe os nomes dos arquivos antes de acessar cada um
+    # Recebe os nomes dos arquivos
     while True:
         nomesArquivos.append(input("Insira o nome do arquivo:\n"))
         if len(nomesArquivos) >= 2:
@@ -84,21 +84,24 @@ def depurarVotos():
                 continue
             else:
                 break
-    # Acessa arquivo por arquivo, guardando os dados constantes
-    # e somando os votos
+    # Acessa arquivo por arquivo, somando os votos
     for i in range(len(nomesArquivos)):
         arquivo = lerConteudoArquivo(nomesArquivos[i])
+        # Se meu arquivo for uma lista vazia, pula esta iteração
         if not arquivo:
             continue
+        # Se meu csvConstante estiver vazio, receberá a parte constante
+        # dos csvs das urnas (as colunas de número e nome dos candidatos)
         if not csvConstante:
-            for colunas in range(len(arquivo)):
-                csvConstante.append(arquivo[colunas][:-1])     
-                if colunas != 0:
-                    somaVotos.append(int(arquivo[colunas][-1]))     
+            for linha in range(len(arquivo)):
+                csvConstante.append(arquivo[linha][:-1])     
+                if linha != 0:
+                    somaVotos.append(int(arquivo[linha][-1]))     
         else:
-            for colunas in range(len(arquivo)):
-                    if colunas != 0:
-                        somaVotos[colunas-1] += (int(arquivo[colunas][-1]))
+            for linha in range(len(arquivo)):
+                    if linha != 0:
+                        somaVotos[linha-1] += (int(arquivo[linha][-1]))
+                        
     if not somaVotos:
         print("Não foi possível realizar a depuração.")
     else:

@@ -15,7 +15,7 @@ def cifrarVigenere(texto):
     resultado = ''
 
     # Para cada iteração, j é meu caracter a ser cifrado e k é o caracter da chave.
-    # Se j e k tiverem presentes no alfabeto,
+    # Se j e k estiverem presentes no alfabeto,
     # duas variáveis recebem a posição (index) desses caracteres no alfabeto.
     # Assim, o caracter criptografado será a soma dessas posições dentro do alfabeto.
     for i in range(len(texto)):

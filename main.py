@@ -27,6 +27,7 @@ while True:
         elif oqfazer == "3":
             utils.depurarVotos()
 
+        # Sair do programa
         elif oqfazer == "4":
             break
 
