@@ -76,10 +76,11 @@ def depurarVotos():
     csvConstante = []
     somaVotos = []
     # Recebe os nomes dos arquivos
-    while True:
-        nomesArquivos.append(input("Insira o nome do arquivo:\n"))
+    print("Para a depuração de votos, insira ao menos dois arquivos.")
+    while True:  
+        nomesArquivos.append(input("Insira o nome do arquivo:\n").strip())
         if len(nomesArquivos) >= 2:
-            escolha = input("Deseja adicionar mais um arquivo?  s/n\n")
+            escolha = input("Deseja adicionar mais um arquivo?  s/n\n").strip()
             if escolha == 's':
                 continue
             else:

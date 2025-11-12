@@ -44,18 +44,18 @@ def decifrarVigenere(textoCifrado):
             resultado += j
     return resultado
 
-def hash(fileContent):
-    hashIntSequence = 0
+def hash(conteudoArquivo):
+    hashInt = 0
     mult = 1019
     mod = 10**18 + 7
-    for linha in range(len(fileContent)):
-        for celula in fileContent[linha]:
+    for linha in range(len(conteudoArquivo)):
+        for celula in conteudoArquivo[linha]:
                 for char in celula:
-                    hashIntSequence = ((hashIntSequence ^ ord(char)) * mult) % mod
+                    hashInt = ((hashInt ^ ord(char)) * mult) % mod
     # Formata a sequência de inteiros para uma hex de até 16 caracteres
     # Caso ele não tenha 16 caracteres, preenche com 0s a esquerda
-    hashHexSequence = f'{hashIntSequence:016x}'
-    return hashHexSequence
+    hashHexString = f'{hashInt:016x}'
+    return hashHexString
 
 def CifrarCSV(nomeArquivo):
     ConteudoCSV = utils.lerConteudoArquivo(nomeArquivo)
